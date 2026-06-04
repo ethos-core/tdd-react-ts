@@ -9,7 +9,7 @@ describe('formatDate', () => {
 
     it('accepts a custom format', () => {
         const date = new Date('2026-03-15T10:30:00')
-        expect(formatDate(date, "YYYY年MM月DD日")).toBe('2026年03月15日')
+        expect(formatDate(date, "YYYY-MM-DD")).toBe('2026-03-15')
     })
 
     it('throws an error for an invalid date', () => {
@@ -45,17 +45,17 @@ describe("formatDate - edge cases", () => {
 describe('formatRelativeDate', () => {
     it("displays 1 minute ago", () => {
         const date = new Date(Date.now() - 60 * 1000);
-        expect(formatRelativeDate(date)).toBe("1分前");
+        expect(formatRelativeDate(date)).toBe("1 minute ago");
     });
 
     it("displays 1 hour ago", () => {
         const date = new Date(Date.now() - 60 * 60 * 1000);
-        expect(formatRelativeDate(date)).toBe("1時間前");
+        expect(formatRelativeDate(date)).toBe("1 hour ago");
     });
 
     it("displays 1 day ago", () => {
         const date = new Date(Date.now() - 24 * 60 * 60 * 1000);
-        expect(formatRelativeDate(date)).toBe("1日前");
+        expect(formatRelativeDate(date)).toBe("1 day ago");
     });
 
     it("displays the date when more than 7 days ago", () => {
@@ -73,12 +73,12 @@ describe("formatRelativeDate - edge cases", () => {
   
     it("returns 'just now' when the current date is passed", () => {
       const now = new Date();
-      expect(formatRelativeDate(now)).toBe("たった今");
+      expect(formatRelativeDate(now)).toBe("just now");
     });
   
     it("returns 'just now' for 59 seconds ago", () => {
       const date = new Date(Date.now() - 59 * 1000);
-      expect(formatRelativeDate(date)).toBe("たった今");
+      expect(formatRelativeDate(date)).toBe("just now");
     });
   
     it("throws an error for an invalid date", () => {

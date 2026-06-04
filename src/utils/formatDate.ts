@@ -49,19 +49,19 @@ export function formatRelativeDate(date: Date): string {
     const diffDays = Math.floor(diffHours / 24);
 
     if (diffSeconds < 60) {
-        return "たった今";
+        return "just now";
     }
 
     if (diffMinutes < 60) {
-        return `${diffMinutes}分前`;
+        return `${diffMinutes} minute${diffMinutes === 1 ? "" : "s"} ago`;
     }
 
     if (diffHours < 24) {
-        return `${diffHours}時間前`;
+        return `${diffHours} hour${diffHours === 1 ? "" : "s"} ago`;
     }
 
     if (diffDays < 7) {
-        return `${diffDays}日前`;
+        return `${diffDays} day${diffDays === 1 ? "" : "s"} ago`;
     }
 
     return formatDate(date);
