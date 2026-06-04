@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 
 interface TaskFormData {
   title: string;
@@ -12,6 +12,7 @@ interface TaskFormProps {
 }
 
 export function TaskForm({ onSubmit, onCancel }: TaskFormProps) {
+  const titleRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("medium");
@@ -33,7 +34,10 @@ export function TaskForm({ onSubmit, onCancel }: TaskFormProps) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (!validate()) return;
+    if (!validate()) {
+      titleRef.current?.focus();
+      return;
+    }
 
     onSubmit({
       title: title.trim(),
@@ -45,13 +49,21 @@ export function TaskForm({ onSubmit, onCancel }: TaskFormProps) {
     setDescription("");
     setPriority("medium");
     setError("");
+    titleRef.current?.focus();
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape" && onCancel) {
+      onCancel();
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
+    <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} noValidate>
       <div>
         <label htmlFor="task-title">Title</label>
         <input
+          ref={titleRef}
           id="task-title"
           type="text"
           value={title}
