@@ -40,6 +40,7 @@ export function TaskBoard() {
   const queryClient = useQueryClient();
   const [showForm, setShowForm] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const {
     data: tasks,
@@ -77,9 +78,27 @@ export function TaskBoard() {
     );
   }
 
+  const filtered = (tasks ?? []).filter((t) =>
+    t.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const tasksByStatus = (status: string) =>
+    filtered.filter((t) => t.status === status);
+
   return (
     <div>
-      <button onClick={() => setShowForm(true)}>Add Task</button>
+      <div className="top-bar">
+        <button className="btn-primary" onClick={() => setShowForm(true)}>
+          Add Task
+        </button>
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
 
       {showForm && (
         <BoardTaskForm
@@ -88,24 +107,49 @@ export function TaskBoard() {
         />
       )}
 
-      <ul>
-        {tasks?.map((task) => (
-          <li key={task.id} data-testid="task-card">
-            <span>{task.title}</span>
-            <button onClick={() => setDeleteTarget(task.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <div className="board">
+        <TaskColumn title="Todo" testId="column-todo" tasks={tasksByStatus("todo")} onDelete={setDeleteTarget} />
+        <TaskColumn title="In Progress" testId="column-in_progress" tasks={tasksByStatus("in_progress")} onDelete={setDeleteTarget} />
+        <TaskColumn title="Done" testId="column-done" tasks={tasksByStatus("done")} onDelete={setDeleteTarget} />
+      </div>
 
       {deleteTarget && (
-        <div role="dialog">
-          <p>Are you sure you want to delete this task?</p>
-          <button onClick={() => deleteMutation.mutate(deleteTarget)}>
-            Confirm Delete
-          </button>
-          <button onClick={() => setDeleteTarget(null)}>Cancel</button>
+        <div className="dialog-overlay" role="dialog">
+          <div className="dialog">
+            <p>Are you sure you want to delete this task?</p>
+            <div className="dialog-actions">
+              <button className="btn-danger" onClick={() => deleteMutation.mutate(deleteTarget)}>
+                Confirm Delete
+              </button>
+              <button onClick={() => setDeleteTarget(null)}>Cancel</button>
+            </div>
+          </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function TaskColumn({
+  title,
+  testId,
+  tasks,
+  onDelete,
+}: {
+  title: string;
+  testId: string;
+  tasks: Task[];
+  onDelete: (id: string) => void;
+}) {
+  return (
+    <div className="column" data-testid={testId}>
+      <h3>{title}</h3>
+      {tasks.map((task) => (
+        <div key={task.id} className="task-card" data-testid="task-card">
+          <span>{task.title}</span>
+          <button onClick={() => onDelete(task.id)}>Delete</button>
+        </div>
+      ))}
     </div>
   );
 }
@@ -121,16 +165,38 @@ function BoardTaskForm({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("medium");
+  const [error, setError] = useState("");
+
+  const validate = (): boolean => {
+    if (title.trim() === "") {
+      setError("Title is required");
+      return false;
+    }
+    if (title.length > 100) {
+      setError("Title must be 100 characters or less");
+      return false;
+    }
+    setError("");
+    return true;
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (title.trim() === "") return;
+    if (!validate()) {
+      titleRef.current?.focus();
+      return;
+    }
 
     onSubmit({
       title: title.trim(),
       description: description.trim(),
       priority,
     });
+
+    setTitle("");
+    setDescription("");
+    setPriority("medium");
+    setError("");
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -139,7 +205,7 @@ function BoardTaskForm({
 
   return (
     <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} noValidate>
-      <div>
+      <div className="form-group">
         <label htmlFor="board-task-title">Title</label>
         <input
           ref={titleRef}
@@ -147,10 +213,17 @@ function BoardTaskForm({
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          aria-describedby={error ? "board-title-error" : undefined}
+          aria-invalid={error ? true : undefined}
         />
+        {error && (
+          <p id="board-title-error" className="error-text" role="alert">
+            {error}
+          </p>
+        )}
       </div>
 
-      <div>
+      <div className="form-group">
         <label htmlFor="board-task-description">Description</label>
         <textarea
           id="board-task-description"
@@ -159,7 +232,7 @@ function BoardTaskForm({
         />
       </div>
 
-      <div>
+      <div className="form-group">
         <label htmlFor="board-task-priority">Priority</label>
         <select
           id="board-task-priority"
@@ -172,11 +245,9 @@ function BoardTaskForm({
         </select>
       </div>
 
-      <div>
-        <button type="submit">Add</button>
-        <button type="button" onClick={onCancel}>
-          Cancel
-        </button>
+      <div style={{ display: "flex", gap: "0.5rem" }}>
+        <button type="submit" className="btn-primary">Add</button>
+        <button type="button" onClick={onCancel}>Cancel</button>
       </div>
     </form>
   );
