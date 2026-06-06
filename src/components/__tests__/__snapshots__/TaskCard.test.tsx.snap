@@ -1,0 +1,118 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TaskCard snapshot > renders a card in done state 1`] = `
+<div>
+  <div
+    data-testid="task-card"
+    style="border: 1px solid rgb(224, 224, 224); border-radius: 8px; padding: 12px; opacity: 0.6;"
+  >
+    <div
+      style="display: flex; justify-content: space-between; align-items: center;"
+    >
+      <h3
+        style="text-decoration: line-through; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px;"
+      >
+        Test task
+      </h3>
+      <span
+        style="background-color: rgb(254, 226, 226); color: rgb(220, 38, 38); padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;"
+      >
+        High
+      </span>
+    </div>
+    <p
+      style="margin-top: 4px; font-size: 0.875rem;"
+    >
+      Description text
+    </p>
+    <div
+      style="margin-top: 8px; display: flex; gap: 8px;"
+    >
+      <button>
+        Edit
+      </button>
+      <button>
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`TaskCard snapshot > renders a card in normal state 1`] = `
+<div>
+  <div
+    data-testid="task-card"
+    style="border: 1px solid rgb(224, 224, 224); border-radius: 8px; padding: 12px; opacity: 1;"
+  >
+    <div
+      style="display: flex; justify-content: space-between; align-items: center;"
+    >
+      <h3
+        style="text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px;"
+      >
+        Test task
+      </h3>
+      <span
+        style="background-color: rgb(254, 226, 226); color: rgb(220, 38, 38); padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;"
+      >
+        High
+      </span>
+    </div>
+    <p
+      style="margin-top: 4px; font-size: 0.875rem;"
+    >
+      Description text
+    </p>
+    <div
+      style="margin-top: 8px; display: flex; gap: 8px;"
+    >
+      <button>
+        Edit
+      </button>
+      <button>
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`TaskCard snapshot > renders a card with a long title 1`] = `
+<div>
+  <div
+    data-testid="task-card"
+    style="border: 1px solid rgb(224, 224, 224); border-radius: 8px; padding: 12px; opacity: 1;"
+  >
+    <div
+      style="display: flex; justify-content: space-between; align-items: center;"
+    >
+      <h3
+        style="text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px;"
+      >
+        A very long task title that should be truncated with ellipsis
+      </h3>
+      <span
+        style="background-color: rgb(254, 226, 226); color: rgb(220, 38, 38); padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;"
+      >
+        High
+      </span>
+    </div>
+    <p
+      style="margin-top: 4px; font-size: 0.875rem;"
+    >
+      Description text
+    </p>
+    <div
+      style="margin-top: 8px; display: flex; gap: 8px;"
+    >
+      <button>
+        Edit
+      </button>
+      <button>
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+`;

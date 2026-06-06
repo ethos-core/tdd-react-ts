@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Badge > renders a high priority badge 1`] = `
+<span
+  style="background-color: rgb(254, 226, 226); color: rgb(220, 38, 38); padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;"
+>
+  High
+</span>
+`;
+
+exports[`Badge > renders a low priority badge 1`] = `
+<span
+  style="background-color: rgb(220, 252, 231); color: rgb(22, 163, 74); padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;"
+>
+  Low
+</span>
+`;
+
+exports[`Badge > renders a medium priority badge 1`] = `
+<span
+  style="background-color: rgb(254, 243, 199); color: rgb(217, 119, 6); padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;"
+>
+  Medium
+</span>
+`;
