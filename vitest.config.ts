@@ -11,14 +11,22 @@ export default defineConfig({
     exclude: ["node_modules", "e2e"],
     coverage: {
       provider: "v8",
-      reporter: ["text", "json", "html"],
+      reporter: ["text", "text-summary", "html", "lcov"],
+      include: ["src/**/*.{ts,tsx}"],
       exclude: [
-        "node_modules/",
-        "src/test/",
-        "**/*.d.ts",
-        "**/*.config.*",
-        "**/types/**",
+        "src/**/*.test.*",
+        "src/**/*.spec.*",
+        "src/mocks/**",
+        "src/test/**",
+        "src/types/**",
+        "src/**/*.d.ts",
       ],
+      thresholds: {
+        statements: 80,
+        branches: 75,
+        functions: 80,
+        lines: 80,
+      },
     },
   },
 });
