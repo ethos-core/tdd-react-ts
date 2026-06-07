@@ -35,7 +35,8 @@ test.describe("Responsive design", () => {
     await context.close();
   });
 
-  test("screenshot comparison for each viewport width", async ({ browser }) => {
+  test("screenshot comparison for each viewport width", { tag: "@visual" }, async ({ browser }) => {
+    test.skip(!!process.env.CI, "Screenshot tests are skipped in CI due to rendering differences");
     const viewports = [
       { name: "mobile", width: 375, height: 812 },
       { name: "tablet", width: 768, height: 1024 },
