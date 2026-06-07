@@ -28,5 +28,6 @@ export default defineConfig({
         lines: 80,
       },
     },
+    pool: "forks",
   },
 });

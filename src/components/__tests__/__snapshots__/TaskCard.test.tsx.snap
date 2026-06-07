@@ -28,10 +28,14 @@ exports[`TaskCard snapshot > renders a card in done state 1`] = `
     <div
       style="margin-top: 8px; display: flex; gap: 8px;"
     >
-      <button>
+      <button
+        type="button"
+      >
         Edit
       </button>
-      <button>
+      <button
+        type="button"
+      >
         Delete
       </button>
     </div>
@@ -67,10 +71,14 @@ exports[`TaskCard snapshot > renders a card in normal state 1`] = `
     <div
       style="margin-top: 8px; display: flex; gap: 8px;"
     >
-      <button>
+      <button
+        type="button"
+      >
         Edit
       </button>
-      <button>
+      <button
+        type="button"
+      >
         Delete
       </button>
     </div>
@@ -106,10 +114,14 @@ exports[`TaskCard snapshot > renders a card with a long title 1`] = `
     <div
       style="margin-top: 8px; display: flex; gap: 8px;"
     >
-      <button>
+      <button
+        type="button"
+      >
         Edit
       </button>
-      <button>
+      <button
+        type="button"
+      >
         Delete
       </button>
     </div>
